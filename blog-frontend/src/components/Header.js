@@ -5,77 +5,58 @@
  * @Description: 实现一个和 tailwindcss 官网一致的 header
  * @FilePath: /blog-frontend/src/components/Header.js
  */
-import React from 'react';
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { Sun, Moon, GitHub } from 'react-feather';
 
 const Header = () => {
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [isDarkMode, setIsDarkMode] = useState(false);
+    const [isScrolled, setIsScrolled] = useState(false);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            setIsScrolled(window.scrollY > 0);
+        };
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
 
     return (
-        <header className="sticky top-0 z-50 flex flex-wrap items-center justify-between bg-white px-4 py-5 shadow-md sm:px-6 lg:px-8">
-            <div className="flex items-center flex-1">
-                <a href="/" className="flex items-center">
-                    {/* 这里替换成您的 logo */}
-                    <img className="h-8 w-auto" src="/path-to-your-logo.svg" alt="Your Logo" />
-                    <span className="ml-2 text-xl font-bold">您的网站名</span>
-                </a>
-            </div>
-
-            {/* 桌面端导航 */}
-            <nav className="hidden md:flex space-x-10">
-                <a href="#" className="text-base font-medium text-gray-500 hover:text-gray-900">文档</a>
-                <a href="#" className="text-base font-medium text-gray-500 hover:text-gray-900">组件</a>
-                <a href="#" className="text-base font-medium text-gray-500 hover:text-gray-900">博客</a>
-                <a href="#" className="text-base font-medium text-gray-500 hover:text-gray-900">关于</a>
-            </nav>
-
-            {/* 移动端菜单按钮 */}
-            <div className="flex items-center md:hidden">
-                <button
-                    type="button"
-                    className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
-                    onClick={() => setIsMenuOpen(!isMenuOpen)}
-                >
-                    <span className="sr-only">打开主菜单</span>
-                    {/* 这里可以添加一个汉堡菜单图标 */}
-                    <svg className="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                    </svg>
-                </button>
-            </div>
-
-            {/* 移动端菜单 */}
-            {isMenuOpen && (
-                <div className="absolute top-0 inset-x-0 p-2 transition transform origin-top-right md:hidden">
-                    <div className="rounded-lg shadow-md bg-white ring-1 ring-black ring-opacity-5 overflow-hidden">
-                        <div className="px-5 pt-4 flex items-center justify-between">
-                            <div>
-                                {/* 这里替换成您的 logo */}
-                                <img className="h-8 w-auto" src="/path-to-your-logo.svg" alt="Your Logo" />
-                            </div>
-                            <div className="-mr-2">
-                                <button
-                                    type="button"
-                                    className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
-                                    onClick={() => setIsMenuOpen(false)}
-                                >
-                                    <span className="sr-only">关闭主菜单</span>
-                                    {/* 这里可以添加一个关闭图标 */}
-                                    <svg className="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                                    </svg>
+        <header className={`sticky top-0 z-40 w-full backdrop-blur flex-none transition-colors duration-500 lg:z-50 lg:border-b lg:border-slate-900/10 ${isScrolled ? 'bg-white/95 supports-backdrop-blur:bg-white/60' : 'bg-transparent'}`}>
+            <div className="max-w-8xl mx-auto">
+                <div className="py-4 border-b border-slate-900/10 lg:px-8 lg:border-0 mx-4 lg:mx-0">
+                    <div className="relative flex items-center">
+                        {/* Logo */}
+                        <a href="/" className="mr-3 flex-none w-[2.0625rem] overflow-hidden md:w-auto">
+                            <span className="sr-only">Tailwind CSS 主页</span>
+                            <svg viewBox="0 0 248 31" className="w-auto h-5">
+                                <path fillRule="evenodd" clipRule="evenodd" d="M25.517 0C18.712 0 14.46 3.382 12.758 10.146c2.552-3.382 5.529-4.65 8.931-3.805 1.941.482 3.329 1.882 4.864 3.432 2.502 2.524 5.398 5.445 11.722 5.445 6.804 0 11.057-3.382 12.758-10.145-2.551 3.382-5.528 4.65-8.93 3.804-1.942-.482-3.33-1.882-4.865-3.431C34.736 2.92 31.841 0 25.517 0zM12.758 15.218C5.954 15.218 1.701 18.6 0 25.364c2.552-3.382 5.529-4.65 8.93-3.805 1.942.482 3.33 1.882 4.865 3.432 2.502 2.524 5.397 5.445 11.722 5.445 6.804 0 11.057-3.381 12.758-10.145-2.552 3.382-5.529 4.65-8.931 3.805-1.941-.483-3.329-1.883-4.864-3.432-2.502-2.524-5.398-5.446-11.722-5.446z" fill="#38bdf8"></path>
+                                <path fillRule="evenodd" clipRule="evenodd" d="M76.546 12.825h-4.453v8.567c0 2.285 1.508 2.249 4.453 2.106v3.463c-5.962.714-8.332-.928-8.332-5.569v-8.567H64.91V9.112h3.304V4.318l3.879-1.143v5.937h4.453v3.713zM93.52 9.112h3.878v17.849h-3.878v-2.57c-1.365 1.891-3.484 3.034-6.285 3.034-4.884 0-8.942-4.105-8.942-9.389 0-5.318 4.058-9.388 8.942-9.388 2.801 0 4.92 1.142 6.285 2.999V9.112zm-5.674 14.636c3.232 0 5.674-2.392 5.674-5.712s-2.442-5.711-5.674-5.711-5.674 2.392-5.674 5.711c0 3.32 2.442 5.712 5.674 5.712zm16.016-17.313c-1.364 0-2.477-1.142-2.477-2.463a2.475 2.475 0 012.477-2.463 2.475 2.475 0 012.478 2.463c0 1.32-1.113 2.463-2.478 2.463zm-1.939 20.526V9.112h3.879v17.849h-3.879zm8.368 0V.9h3.878v26.06h-3.878zm29.053-17.849h4.094l-5.638 17.849h-3.807l-3.735-12.03-3.771 12.03h-3.806l-5.639-17.849h4.094l3.484 12.315 3.771-12.315h3.699l3.734 12.315 3.52-12.315zm8.906-2.677c-1.365 0-2.478-1.142-2.478-2.463a2.475 2.475 0 012.478-2.463 2.475 2.475 0 012.478 2.463c0 1.32-1.113 2.463-2.478 2.463zm-1.939 20.526V9.112h3.878v17.849h-3.878zm17.812-18.313c4.022 0 6.895 2.713 6.895 7.354V26.96h-3.878V16.394c0-2.713-1.58-4.14-4.022-4.14-2.55 0-4.561 1.499-4.561 5.14v9.567h-3.879V9.112h3.879v2.285c1.185-1.856 3.124-2.749 5.566-2.749zm25.282-6.675h3.879V26.96h-3.879v-2.57c-1.364 1.892-3.483 3.034-6.284 3.034-4.884 0-8.942-4.105-8.942-9.389 0-5.318 4.058-9.388 8.942-9.388 2.801 0 4.92 1.142 6.284 2.999V1.973zm-5.674 21.775c3.232 0 5.674-2.392 5.674-5.712s-2.442-5.711-5.674-5.711-5.674 2.392-5.674 5.711c0 3.32 2.442 5.712 5.674 5.712zm22.553 3.677c-5.423 0-9.481-4.105-9.481-9.389 0-5.318 4.058-9.388 9.481-9.388 3.519 0 6.572 1.82 8.008 4.605l-3.34 1.928c-.79-1.678-2.549-2.749-4.704-2.749-3.16 0-5.566 2.392-5.566 5.604 0 3.213 2.406 5.605 5.566 5.605 2.155 0 3.914-1.107 4.776-2.749l3.34 1.892c-1.508 2.82-4.561 4.64-8.08 4.64zm14.472-13.387c0 3.249 9.661 1.285 9.661 7.89 0 3.57-3.125 5.497-7.003 5.497-3.591 0-6.177-1.607-7.326-4.177l3.34-1.927c.574 1.606 2.011 2.57 3.986 2.57 1.724 0 3.052-.571 3.052-2 0-3.176-9.66-1.391-9.66-7.781 0-3.356 2.909-5.462 6.572-5.462 2.945 0 5.387 1.357 6.644 3.713l-3.268 1.82c-.647-1.392-1.904-2.035-3.376-2.035-1.401 0-2.622.607-2.622 1.892zm16.556 0c0 3.249 9.66 1.285 9.66 7.89 0 3.57-3.124 5.497-7.003 5.497-3.591 0-6.176-1.607-7.326-4.177l3.34-1.927c.575 1.606 2.011 2.57 3.986 2.57 1.724 0 3.053-.571 3.053-2 0-3.176-9.66-1.391-9.66-7.781 0-3.356 2.908-5.462 6.572-5.462 2.944 0 5.386 1.357 6.643 3.713l-3.268 1.82c-.646-1.392-1.903-2.035-3.375-2.035-1.401 0-2.622.607-2.622 1.892z" fill="currentColor"></path>
+                            </svg>
+                        </a>
+                        {/* Navigation */}
+                        <div className="relative hidden lg:flex items-center ml-auto">
+                            <nav className="text-sm leading-6 font-semibold text-slate-700">
+                                <ul className="flex space-x-8">
+                                    <li><a className="hover:text-sky-500" href="#">文档</a></li>
+                                    <li><a className="hover:text-sky-500" href="#">组件</a></li>
+                                    <li><a className="hover:text-sky-500" href="#">博客</a></li>
+                                    <li><a className="hover:text-sky-500" href="#">展示</a></li>
+                                </ul>
+                            </nav>
+                            <div className="flex items-center border-l border-slate-200 ml-6 pl-6">
+                                <button onClick={() => setIsDarkMode(!isDarkMode)} className="ml-6 block text-slate-400 hover:text-slate-500">
+                                    <span className="sr-only">切换深色模式</span>
+                                    {isDarkMode ? <Moon size={20} /> : <Sun size={20} />}
                                 </button>
+                                <a href="https://github.com/tailwindlabs/tailwindcss" className="ml-6 block text-slate-400 hover:text-slate-500">
+                                    <span className="sr-only">Tailwind CSS on GitHub</span>
+                                    <GitHub size={20} />
+                                </a>
                             </div>
-                        </div>
-                        <div className="px-2 pt-2 pb-3 space-y-1">
-                            <a href="#" className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">文档</a>
-                            <a href="#" className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">组件</a>
-                            <a href="#" className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">博客</a>
-                            <a href="#" className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">关于</a>
                         </div>
                     </div>
                 </div>
-            )}
+            </div>
         </header>
     );
 };
