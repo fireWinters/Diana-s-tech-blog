@@ -16,10 +16,9 @@ const Sidebar = () => {
   
     useEffect(() => {
       // Fetch sidebar data from API
-      fetch(SIDEBAR)
-        .then((response) => response.json())
-        .then((data) => setMenuItems(data))
-        .catch((error) => console.error('Error fetching sidebar data:', error));
+      // fetch(SIDEBAR).then((response) => response.json())
+      //   .then((data) => setMenuItems(data))
+      //   .catch((error) => console.error('Error fetching sidebar data:', error));
     }, []);
   
     return (

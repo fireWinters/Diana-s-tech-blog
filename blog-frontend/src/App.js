@@ -22,7 +22,7 @@ function App() {
     <div className='flex min-h-screen md-h-screen'>
       {/* <Blog/> */}
       <Header/>
-      <Sidebar/>
+      {/* <Sidebar/> */}
       <MainContent/>
     </div>
   );
