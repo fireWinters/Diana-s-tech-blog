@@ -7,11 +7,10 @@
   "proxy": "http://localhost:5001"这个配置在package中不会生效
  * @FilePath: /blog-frontend/src/App.js
  */
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React from 'react';
 
 import './App.css';
-import Blog from './pages/Blog'
+// import Blog from './pages/Blog'
 import Sidebar from './components/Sidebar';
 import MainContent from './pages/MainContent';
 import Header from './components/Header';

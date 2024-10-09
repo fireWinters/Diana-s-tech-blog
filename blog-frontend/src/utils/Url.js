@@ -7,3 +7,5 @@
  */
 const PROXY="http://localhost:5001"
 export const POSTS=`http://localhost:5001/api/posts`
+export const SIDEBAR=`http://localhost:5001/api/sidebar`
+export default {PROXY, POSTS, SIDEBAR}
